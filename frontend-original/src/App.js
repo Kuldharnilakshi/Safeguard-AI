@@ -52,8 +52,8 @@ function App() {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   const [audio] = useState(new Audio(ringtone));
-  const mediaRecorderRef = useRef(null);
-const [mediaFile, setMediaFile] = useState(null);
+  /*const mediaRecorderRef = useRef(null);
+const [mediaFile, setMediaFile] = useState(null);*/
 const [editEmail, setEditEmail] = useState(false);
   
 
@@ -282,6 +282,10 @@ const acceptCall = () => {
   alert("Call Accepted. Stay calm and stay safe!");
 
   endCall();
+  const acceptCall = () => {
+  alert("Call Accepted. Stay calm and stay safe!");
+  endCall();
+};
 
 };
 
@@ -411,7 +415,9 @@ const sendEvidence = async () => {
 
           <div className="call-buttons">
 
-            <button className="accept">Accept</button>
+            <button className="accept" onClick={acceptCall}>
+  Accept
+</button>
 
             <button className="decline" onClick={endCall}>
               End
@@ -490,6 +496,7 @@ const sendEvidence = async () => {
         {/* MAIN */}
 
         <div className="main">
+          {alertMessage && <p className="alert">{alertMessage}</p>}
 
           <div className="top-cards">
 
