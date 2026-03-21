@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import "@tensorflow/tfjs-backend-webgl";
 import "./App.css";
 import ringtone from "./ringtone.mp3";
+
+import * as tf from "@tensorflow/tfjs";
+import "@tensorflow/tfjs-backend-webgl";
+import * as speechCommands from "@tensorflow-models/speech-commands";
+
+// set backend
+tf.setBackend("webgl");
 
 import {
   MapContainer,
