@@ -434,7 +434,7 @@ const sendEvidence = async () => {
           <div className="profile">
 
             <button
-              className="edit-btn"
+              className="btn btn-edit"
               onClick={() => setEditMode(!editMode)}
             >
               ✏
@@ -461,7 +461,9 @@ const sendEvidence = async () => {
                 <input placeholder="Address" value={address} onChange={(e)=>setAddress(e.target.value)} />
                 <input placeholder="Medical Info" value={medical} onChange={(e)=>setMedical(e.target.value)} />
 
-                <button onClick={saveProfile}>Save</button>
+                <button 
+                className="btn-btn-save"
+                onClick={saveProfile}>Save</button>
 
               </div>
 
@@ -495,140 +497,88 @@ const sendEvidence = async () => {
 
             <div className="card">
 
-              <div className="card-header">
-
-                <h2>Emergency Contacts</h2>
-
-                <button onClick={() => setEditContacts(!editContacts)}>
-                  Edit
-                </button>
-
-              </div>
-
-              {contacts.map((c, i) => (
-
-                <div key={i} className="contact-row">
-
-                  {editContacts ? (
-
-                    <>
-
-                      <input
-                        placeholder="Name"
-                        value={c.name}
-                        onChange={(e)=>updateContact(i,"name",e.target.value)}
-                      />
-
-                      <input
-                        placeholder="Relation"
-                        value={c.relation}
-                        onChange={(e)=>updateContact(i,"relation",e.target.value)}
-                      />
-
-                      <input
-                        placeholder="Number"
-                        value={c.number}
-                        onChange={(e)=>updateContact(i,"number",e.target.value)}
-                      />
-
-                      <button
-                        className="delete-btn"
-                        onClick={()=>deleteContact(i)}
-                      >
-                        ❌
-                      </button>
-
-                    </>
-
-                  ) : (
-
-                    <p>
-                      {c.name} ({c.relation}) - {c.number}
-                    </p>
-
-                  )}
-
-                </div>
-
-              ))}
-
-              {editContacts && (
-
-                <div>
-
-                  <button onClick={addContact}>
-                    + Add Contact
-                  </button>
-
-                  <button onClick={saveContacts}>
-                    Save
-                  </button>
-
-                </div>
-
-              )}
-
-            </div>
-
-            {/* EMERGENCY EMAIL */}
-
-            
-
-           <div className="card">
-
   <div className="card-header">
-    <h2>📧 Emergency Email</h2>
+    <h2>Emergency Contacts</h2>
 
-    <button onClick={() => setEditEmail(!editEmail)}>
-      {editEmail ? "Cancel" : "Edit"}
+    <button 
+      className="btn btn-edit"
+      onClick={() => setEditContacts(!editContacts)}
+    >
+      {editContacts ? "Cancel" : "Edit"}
     </button>
   </div>
 
-  {editEmail ? (
-    <>
-      <input
-        type="email"
-        placeholder="Enter emergency email"
-        value={emergencyEmail}
-        onChange={(e) => setEmergencyEmail(e.target.value)}
-      />
+  {contacts.map((c, i) => (
 
-      <div style={{ marginTop: "10px" }}>
-        <button
-          className="save-btn"
-          onClick={() => {
-            localStorage.setItem("emergencyEmail", emergencyEmail);
-            setEditEmail(false);
-            alert("Email Saved ✅");
-          }}
-        >
-          Save
-        </button>
+    <div key={i} className="contact-row">
 
-        <button
-          className="delete-btn"
-          onClick={() => {
-            setEmergencyEmail("");
-            localStorage.removeItem("emergencyEmail");
-            alert("Email Deleted ❌");
-          }}
-        >
-          Delete
-        </button>
-      </div>
-    </>
-  ) : (
-    <p>
-      {emergencyEmail || "No email added"}
-    </p>
+      {editContacts ? (
+
+        <>
+          <input
+            className="input"
+            placeholder="Name"
+            value={c.name}
+            onChange={(e)=>updateContact(i,"name",e.target.value)}
+          />
+
+          <input
+            className="input"
+            placeholder="Relation"
+            value={c.relation}
+            onChange={(e)=>updateContact(i,"relation",e.target.value)}
+          />
+
+          <input
+            className="input"
+            placeholder="Number"
+            value={c.number}
+            onChange={(e)=>updateContact(i,"number",e.target.value)}
+          />
+
+          <button
+            className="btn btn-delete"
+            onClick={()=>deleteContact(i)}
+          >
+            Delete
+          </button>
+        </>
+
+      ) : (
+
+        <p className="contact-display">
+          {c.name} ({c.relation}) - {c.number}
+        </p>
+
+      )}
+
+    </div>
+
+  ))}
+
+  {editContacts && (
+
+    <div className="button-group">
+
+      <button 
+        className="btn btn-add"
+        onClick={addContact}
+      >
+        + Add
+      </button>
+
+      <button 
+        className="btn btn-save"
+        onClick={saveContacts}
+      >
+        Save
+      </button>
+
+    </div>
+
   )}
 
-  <p className="email-note">
-    This email will receive evidence in emergency
-  </p>
-
 </div>
-            
 
             {/* LOCATION */}
 
@@ -662,10 +612,98 @@ const sendEvidence = async () => {
               </MapContainer>
 
             </div>
+            
+          </div>
+
+            {/* EMERGENCY EMAIL */}
 
             
 
-          </div>
+           <div className="card">
+
+  <div className="card-header">
+    <h2>📧 Emergency Email</h2>
+
+    <button 
+      className="btn btn-edit"
+      onClick={() => setEditEmail(!editEmail)}
+    >
+      {editEmail ? "Cancel" : "Edit"}
+    </button>
+  </div>
+
+  {editEmail ? (
+    <>
+      <input
+        type="email"
+        className="input full-width"
+        placeholder="Enter emergency email"
+        value={emergencyEmail}
+        onChange={(e) => setEmergencyEmail(e.target.value)}
+      />
+
+      <div className="button-group">
+
+        <button
+          className="btn btn-save"
+          onClick={() => {
+            localStorage.setItem("emergencyEmail", emergencyEmail);
+            setEditEmail(false);
+          }}
+        >
+          Save
+        </button>
+
+        <button
+          className="btn btn-delete"
+          onClick={() => {
+            setEmergencyEmail("");
+            localStorage.removeItem("emergencyEmail");
+          }}
+        >
+          Delete
+        </button>
+
+      </div>
+    </>
+  ) : (
+    <p className="contact-display">
+      {emergencyEmail || "No email added"}
+    </p>
+  )}
+
+  <p className="email-note">
+    This email will receive evidence in emergency
+  </p>
+
+</div>
+            
+
+          <div className="card safety-card">
+  <h2>🛡️ Important Safety Info</h2>
+
+  <div className="safety-item">
+    <strong>🚨 Emergency Number:</strong> 112
+  </div>
+
+  <div className="safety-item">
+    <strong>🎤 Voice Trigger:</strong> Say "HELP" to activate SOS
+  </div>
+
+  <div className="safety-item">
+    <strong>📍 Location Sharing:</strong> Okay
+  </div>
+
+  <div className="safety-item">
+    <strong>⚡ Status:</strong> <span className="active">Monitoring Active</span>
+  </div>
+
+  <div className="safety-tips">
+    <p>✔ Stay aware of surroundings</p>
+    <p>✔ Keep phone charged</p>
+    <p>✔ Share live location in emergencies</p>
+  </div>
+</div>
 
           {/* ACTIONS */}
 
